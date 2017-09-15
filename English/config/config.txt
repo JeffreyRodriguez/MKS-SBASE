@@ -130,7 +130,7 @@ temperature_control.hotend.enable            true             # Whether to activ
 temperature_control.hotend.heater_pin        2.7              # Pin that controls the heater, set to nc if a readonly thermistor is being defined   2.7
 temperature_control.hotend.sensor            max31855
 temperature_control.hotend.chip_select_pin    0.16
-temperature_contro.hotend.spi_channel         0    # SPI channel 0 or 1
+temperature_control.hotend.spi_channel         0    # SPI channel 0 or 1
 temperature_control.hotend.set_m_code        104              #
 temperature_control.hotend.set_and_wait_m_code 109            #
 temperature_control.hotend.designator        T                #
