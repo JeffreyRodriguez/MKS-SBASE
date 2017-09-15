@@ -169,10 +169,10 @@ temperature_control.bed.set_m_code           140              #
 temperature_control.bed.set_and_wait_m_code  190              #
 temperature_control.bed.designator           B                #
 
-# 24v PID tuned to 60C
-temperature_control.bed.p_factor             152.1
-temperature_control.bed.i_factor             9.332
-temperature_control.bed.d_factor             620
+# 24v PID tuned to 60C from 20C
+temperature_control.bed.p_factor             193
+temperature_control.bed.i_factor             12.35
+temperature_control.bed.d_factor             754
 
 #temperature_control.bed.bang_bang            false           # set to true to use bang bang control rather than PID
 #temperature_control.bed.hysteresis           2.0             # set to the temperature in degrees C to use as hysteresis
