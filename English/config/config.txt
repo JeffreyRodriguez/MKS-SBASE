@@ -95,7 +95,7 @@ extruder.hotend.en_pin                          0.21             # Pin for extru
 #extruder.hotend.retract_zlift_length            0               # zlift on retract in mm, 0 disables
 #extruder.hotend.retract_zlift_feedrate          6000            # zlift feedrate in mm/min (Note mm/min NOT mm/sec)
 
-delta_current                                1.0              # First extruder stepper motor current
+delta_current                                1.5              # First extruder stepper motor current
 
 # Second extruder module configuration
 #extruder.hotend2.enable                          true             # Whether to activate the extruder module at all. All configuration is ignored if false
@@ -111,7 +111,7 @@ delta_current                                1.0              # First extruder s
 #extruder.hotend2.x_offset                        0                # x offset from origin in mm
 #extruder.hotend2.y_offset                        25.0             # y offset from origin in mm
 #extruder.hotend2.z_offset                        0                # z offset from origin in mm
-#epsilon_current                              1.0              # Second extruder stepper motor current
+#epsilon_current                              1.5              # Second extruder stepper motor current
 
 
 # Laser module configuration
@@ -127,19 +127,20 @@ laser_module_enable                          false            # Whether to activ
 # Hotend temperature control configuration
 temperature_control.hotend.enable            true             # Whether to activate this ( "hotend" ) module at all.
                                                               # All configuration is ignored if false.
-temperature_control.hotend.heater_pin        2.7              # Pin that controls the heater, set to nc if a readonly thermistor is being defined   2.7
-temperature_control.hotend.sensor            max31855
-temperature_control.hotend.chip_select_pin    0.16
-temperature_control.hotend.spi_channel         0    # SPI channel 0 or 1
-temperature_control.hotend.set_m_code        104              #
+temperature_control.hotend.heater_pin          2.7              # Pin that controls the heater, set to nc if a readonly thermistor is being defined   2.7
+temperature_control.hotend.sensor              max6675
+temperature_control.hotend.readings_per_second 4
+temperature_control.hotend.chip_select_pin     0.16
+temperature_control.hotend.spi_channel         0
+temperature_control.hotend.set_m_code          104              #
 temperature_control.hotend.set_and_wait_m_code 109            #
-temperature_control.hotend.designator        T                #
+temperature_control.hotend.designator          T                #
 
-#temperature_control.hotend.p_factor         13.7             # permanently set the PID values after an auto pid
-#temperature_control.hotend.i_factor         0.097            #
-#temperature_control.hotend.d_factor         24               #
-
-temperature_control.hotend.max_pwm           64               # max pwm, 64 is a good value if driving a 12v resistor with 24v.
+temperature_control.hotend.p_factor            20.6             # permanently set the PID values after an auto pid
+temperature_control.hotend.i_factor            2.254            #
+temperature_control.hotend.d_factor            47               #
+temperature_control.hotend.max_pwm             180              # GARCAD hotend max 17v; this gives ~17v on 24v input.
+temperature_control.hotend.max_temp            430
 
 # Hotend2 temperature control configuration
 #temperature_control.hotend2.enable            true             # Whether to activate this ( "hotend" ) module at all.
@@ -162,17 +163,16 @@ temperature_control.hotend.max_pwm           64               # max pwm, 64 is a
 temperature_control.bed.enable               true             #
 temperature_control.bed.thermistor_pin       0.23             #
 temperature_control.bed.heater_pin           2.5              #  2.5
-temperature_control.bed.thermistor           RRRF100K    # see http://smoothieware.org/temperaturecontrol#toc5
+temperature_control.bed.thermistor           RRRF100K         # see http://smoothieware.org/temperaturecontrol#toc5
 #temperature_control.bed.beta                3960             # or set the beta value
 
 temperature_control.bed.set_m_code           140              #
 temperature_control.bed.set_and_wait_m_code  190              #
 temperature_control.bed.designator           B                #
 
-# 24v PID tuned to 60C from 20C
-temperature_control.bed.p_factor             193
-temperature_control.bed.i_factor             12.35
-temperature_control.bed.d_factor             754
+temperature_control.bed.p_factor             152.1
+temperature_control.bed.i_factor             9.332
+temperature_control.bed.d_factor             620
 
 #temperature_control.bed.bang_bang            false           # set to true to use bang bang control rather than PID
 #temperature_control.bed.hysteresis           2.0             # set to the temperature in degrees C to use as hysteresis
@@ -208,17 +208,17 @@ switch.fan.output_type                       pwm              # pwm output setta
 endstops_enable                              true             # the endstop module is enabled by default and can be disabled here
 #corexy_homing                               false            # set to true if homing on a hbit or corexy
 alpha_min_endstop                            1.24^!            # add a ! to invert if endstop is NO connected to ground
-alpha_max_endstop                            1.25^            # NOTE set to nc if this is not installed
+alpha_max_endstop                            nc #1.25^            # NOTE set to nc if this is not installed
 alpha_homing_direction                       home_to_min      # or set to home_to_max and set alpha_max
 alpha_min                                    0                # this gets loaded after homing when home_to_min is set
 alpha_max                                    250              # this gets loaded after homing when home_to_max is set
 beta_min_endstop                             1.26^!            #
-beta_max_endstop                             1.27^            #
+beta_max_endstop                             nc #1.27^            #
 beta_homing_direction                        home_to_min      #
 beta_min                                     0                #
 beta_max                                     250              #
 gamma_min_endstop                            1.28^!            #
-gamma_max_endstop                            1.29^            #
+gamma_max_endstop                            nc # 1.29^            #
 gamma_homing_direction                       home_to_min      #
 gamma_min                                    0                #
 gamma_max                                    120              #
@@ -230,7 +230,7 @@ gamma_max                                    120              #
 # optional enable limit switches, actions will stop if any enabled limit switch is triggered
 #alpha_limit_enable                          false            # set to true to enable X min and max limit switches
 #beta_limit_enable                           false            # set to true to enable Y min and max limit switches
-#gamma_limit_enable                          false            # set to true to enable Z min and max limit switches
+gamma_limit_enable                          false            # set to true to enable Z min and max limit switches
 
 alpha_fast_homing_rate_mm_s                  50               # feedrates in mm/second
 beta_fast_homing_rate_mm_s                   50               # "
@@ -265,7 +265,7 @@ zprobe.probe_height                          5               # how much above be
 #leveling-strategy.three-point-leveling.save_plane     false       # set to true to allow the bed plane to be saved with M500 default is false
 
 # Panel
-panel.enable                                 true             # set to true to enable the panel code
+panel.enable                                 false             # set to true to enable the panel code
 #panel.lcd                                    smoothiepanel     # set type of panel
 #panel.encoder_a_pin                          3.25!^            # encoder pin
 #panel.encoder_b_pin                          3.26!^            # encoder pin
